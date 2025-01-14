@@ -1,0 +1,38 @@
+{% extends 'chat/base.html' %}
+
+{% block title %}Register - Chat App{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>Create Account</h2>
+        <form method="post" class="auth-form">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="error-message">
+                            {{ field.errors|join:", " }}
+                        </div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <div class="help-text">
+                            {{ field.help_text }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-user-plus"></i> Register
+            </button>
+        </form>
+        <div class="auth-links">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

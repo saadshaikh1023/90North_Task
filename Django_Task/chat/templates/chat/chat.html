@@ -1,0 +1,71 @@
+{% extends 'chat/base.html' %}
+
+{% load static %}
+
+{% block title %}Chat - Chat App{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <!-- Users List Sidebar -->
+    <div class="users-list" id="users-sidebar">
+        <div class="user-header">
+            <h3>Active Users</h3>
+            <button id="toggle-users" class="toggle-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="search-box">
+            <input type="text" id="user-search" placeholder="Search users...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        <div class="users-content">
+            {% for user in users %}
+                <div class="user-item" data-user-id="{{ user.id }}">
+                    <div class="user-avatar">
+                        <span class="avatar-text">{{ user.username|make_list|first|upper }}</span>
+                    </div>
+                    <div class="user-info">
+                        <span class="username">{{ user.username }}</span>
+                        <span class="last-message">Click to start chat</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area">
+        <!-- Chat Header -->
+        <div class="chat-header" id="chat-header">
+            <div class="current-user-info">
+                <div class="user-avatar small hidden" id="current-chat-avatar">
+                    <span class="avatar-text"></span>
+                </div>
+                <span id="current-chat-user">Select a user to start chatting</span>
+            </div>
+        </div>
+
+        <!-- Messages Container -->
+        <div id="chat-messages" class="chat-messages">
+            <div class="no-messages-placeholder">
+                <i class="fas fa-comments"></i>
+                <p>Select a user to start chatting</p>
+            </div>
+        </div>
+
+        <!-- Message Input Area -->
+        <div class="message-input-container">
+            <div class="message-input">
+                <input type="text" id="message-input" placeholder="Type your message..." disabled>
+                <button id="send-button" class="send-button" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'chat/js/chat.js' %}"></script>
+{% endblock %}
